@@ -7,10 +7,27 @@ El flujo se basa en el uso de un modelo de IA para analizar los archivos, clasif
 
 ```mermaid
 flowchart TD
-    A[📂 Carpeta en OneDrive] --> B[🔄 Script se ejecuta]
-    B --> C[📥 Leer documentos de la carpeta]
-    C --> D[🤖 Procesar con modelo de IA]
-    D --> E[📑 Generar JSON con categorías]
-    E --> F[🏷️ Etiquetar archivos en OneDrive con JSON]
-    F --> G[✅ Proceso finalizado]
+    A[Inicio] --> B[Conexion a SharePoint via MS Graph]
+    B --> C[Obtener lista de archivos]
+    C --> D{El archivo es nuevo o modificado?}
+
+    D -->|Ya etiquetado| L[Buscador IA en Teams o SharePoint]
+    D -->|No etiquetado| F[Extraer primeras 500-1000 palabras]
+
+    F --> G[Modelo IA - Clasificacion]
+    G --> H[Asignar etiquetas]
+    H --> I[Guardar etiquetas en SharePoint]
+
+    F --> J[Generar embeddings del contenido]
+    J --> K[Guardar embeddings en Almacen Vectorial]
+
+    I --> L[Actualizar indice de control]
+    K --> L[Actualizar indice de control]
+
+    L --> M[Buscador IA en Teams o SharePoint]
+    M --> N[Consulta en lenguaje natural]
+    N --> O[IA convierte consulta en embeddings]
+    O --> P[Busqueda en Almacen Vectorial + Filtro por etiquetas]
+    P --> Q[Devolver documentos relevantes con link a SharePoint]
+
 ```
