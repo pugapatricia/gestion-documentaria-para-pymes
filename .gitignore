@@ -1,2 +1,12 @@
+# Bases de datos y documentos pesados
+base_de_datos/
+*.pptx
+*.xlsx
+*.csv
+*.db
+*.sqlite
+
+# Jupyter
+.ipynb_checkpoints/
 .DS_Store
 password.env
